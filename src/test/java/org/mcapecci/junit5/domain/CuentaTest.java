@@ -1,9 +1,11 @@
 package org.mcapecci.junit5.domain;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 import org.mcapecci.junit5.exceptions.DineroInsuficienteException;
 
 import java.math.BigDecimal;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -133,4 +135,72 @@ class CuentaTest {
 
 
     }
+
+    @Test
+    @EnabledOnOs(OS.WINDOWS)
+    void testSoloWindows() {
+    }
+
+    @Test
+    @EnabledOnOs({OS.LINUX, OS.MAC})
+    void testSoloLinuxMac() {
+    }
+
+    @Test
+    @DisabledOnOs(OS.WINDOWS)
+    void testNoWindows() {
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_8)
+    void testSoloJdk8() {
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_11)
+    void testSoloJdk11() {
+    }
+
+    @Test
+    @DisabledOnJre(JRE.JAVA_11)
+    void testNoJdk11() {
+    }
+
+    @Test
+    void imprimirSystemProperties() {
+        Properties properties = System.getProperties();
+        properties.forEach((k, v) -> System.out.println(k + ":" + v));
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "java.version", matches = ".*11.*")
+    void testJavaVersion() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "java.version", matches = "15.0.1")
+    void testJavaVersion15() {
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "os.arch", matches = ".*32.*")
+    void testSolo64() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "os.arch", matches = ".*32.*")
+    void testNO64() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "user.name", matches = "Sistemas")
+    void testUsername() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "ENV", matches = "dev")
+    void testDev() {
+    }
+
+
 }
