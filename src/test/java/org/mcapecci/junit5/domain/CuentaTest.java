@@ -46,6 +46,7 @@ class CuentaTest {
         System.out.println("finalizando el test");
     }
 
+    @Tag("cuenta")
     @Nested
     @DisplayName("probando atributos de la cuenta corriente")
     class cuentaTestNombreSaldo{
@@ -83,6 +84,7 @@ class CuentaTest {
 
     @Nested
     class cuentaOperacionesTest{
+        @Tag("cuenta")
         @Test
         void debitoCuentaTest() {
             cuenta.debito(new BigDecimal(100));
@@ -91,6 +93,7 @@ class CuentaTest {
             assertEquals("900.12345", cuenta.getSaldo().toPlainString());
         }
 
+        @Tag("cuenta")
         @Test
         void creditoCuentaTest() {
             cuenta.credito(new BigDecimal(100));
@@ -99,6 +102,8 @@ class CuentaTest {
             assertEquals("1100.12345", cuenta.getSaldo().toPlainString());
         }
 
+        @Tag("cuenta")
+        @Tag("banco")
         @Test
         void transferirDineroCuentasTest() {
             Cuenta cuenta1 = new Cuenta("Jhon Doe", new BigDecimal("2500"));
@@ -115,6 +120,8 @@ class CuentaTest {
 
 
     @Test
+    @Tag("cuenta")
+    @Tag("error")
     void dineroInsuficienteExceptionTest() {
         Exception exception = assertThrows(DineroInsuficienteException.class, () -> {
             cuenta.debito(new BigDecimal(1500));
@@ -127,6 +134,8 @@ class CuentaTest {
 
 
     @Test
+    @Tag("cuenta")
+    @Tag("banco")
     @DisplayName("Probando relaciones entre las cuentas y el banco con assertAll")
     void relacionBancoCuentasTest() {
         Cuenta cuenta1 = new Cuenta("Jhon Doe", new BigDecimal("2500"));
@@ -294,6 +303,7 @@ class CuentaTest {
         assertEquals(900, cuenta.getSaldo().intValue());
         assertEquals("900.12345", cuenta.getSaldo().toPlainString());
     }
+    @Tag("param")
     @Nested
     class PruebasParametrizadasTest {
         @ParameterizedTest(name = "número {index} ejecutando con valor {0} - {argumentsWithNames}")
@@ -350,6 +360,7 @@ class CuentaTest {
             assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
         }
     }
+    @Tag("param")
     @ParameterizedTest(name = "numero {index} ejecutando con valor {0} - {argumentsWithNames}")
     @MethodSource("montoList")
     void testDebitoCuentaMethodSource(String monto) {
